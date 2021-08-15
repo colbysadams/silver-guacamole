@@ -69,6 +69,16 @@ resource "aws_autoscaling_group" "example" {
     propagate_at_launch = true
     value = "terraform-asg-example"
   }
+
+  dynamic "tag" {
+    for_each = var.custom_tags
+    content {
+      key = tag.key
+      propagate_at_launch = true
+      value = tag.value
+    }
+  }
+
 }
 
 resource "aws_lb" "example" {
